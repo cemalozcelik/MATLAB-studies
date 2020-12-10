@@ -1,0 +1,36 @@
+clear all
+
+xl=0;
+xu=2*pi;
+es=0.000001;
+imax=100;
+xr=0;
+iter=0;
+
+f=@(x) sin(x);
+
+while 1
+   
+    xrold=xr;
+    xr=(xl+xu)/2;
+    iter=iter+1;
+    if xr ~=0
+        ea=abs((xr-xrold)/xr)*100;
+    end
+    test=f(xl)*f(xr);
+    if test<0
+        xu=xr;
+    elseif test>0
+        xl=xr;
+    else
+        ea=0;
+    end
+    if (ea<es) || (iter>=imax)
+        break
+    end
+end
+
+output=xr;
+disp(output)
+x=0
+plot(
